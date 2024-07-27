@@ -1,0 +1,64 @@
+/* src/Login.module.css */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:rgb(92,59,56);
+  }
+  
+  .loginForm {
+    background-image:linear-gradient(to bottom,rgb(180,39,36),rgb(46,36,37));
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .logo {
+    background-image: url('../../public/download.png'); /* Replace with the actual path to the logo */
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    text-align: left;
+    color: #fff;
+    margin: 0.5rem 0;
+  }
+  
+  p {
+    text-align: left;
+    color: #fff;
+  }
+  
+  .inputGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #df8686;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .forgotPassword a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
