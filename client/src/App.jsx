@@ -2,23 +2,29 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Navbar';
 import UserHome from './pages/UserHome';
+import Login from './pages/Login';
 import styles from './index.css';
+
+const LayoutWithHeader = ({ children }) => (
+  <body>
+    <Header />
+    <main>{children}</main>
+  </body>
+);
 
 function App() {
   return (
-    <body>
-      <Header />
-      <main>
-        <Router>
-          <Routes>
-            <Route path="/" element={<UserHome />} />
-            {/* <Route path="/hostel" element={<Hostel />} />
-            <Route path="/admin" element={<AdminHome />} />  */}
-            <Route path="/Login" element={<Login />} /> 
-          </Routes>
-        </Router>
-      </main>
-    </body>
+    <Router>
+      <Routes>
+        {/* Routes with Header */}
+        <Route path="/" element={<LayoutWithHeader><UserHome /></LayoutWithHeader>} />
+        {/* <Route path="/hostel" element={<LayoutWithHeader><Hostel /></LayoutWithHeader>} />
+        <Route path="/admin" element={<LayoutWithHeader><AdminHome /></LayoutWithHeader>} /> */}
+        
+        {/* Route without Header */}
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 

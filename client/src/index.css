@@ -86,7 +86,7 @@ header {
 main {
   flex: 1;
   display: flex;
-  padding: 2.5rem;
+  padding: 2rem;
   background-color: var(--secondary-color);
 }
 
@@ -106,6 +106,9 @@ main {
   transition: transform 0.2s;
   cursor: pointer;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hostel-image:hover {
@@ -121,6 +124,7 @@ main {
 .hostel-image p {
   margin: 1rem 0;
   font-size: calc(var(--font-size) * 1.2);
+  color: black;
 }
 
 /* Responsive Styles */
