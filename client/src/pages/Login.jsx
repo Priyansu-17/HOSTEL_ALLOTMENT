@@ -1,6 +1,6 @@
 // src/Login.js
 import React, { useState } from 'react';
-import styles from './Login.module.css';
+import styles from '../styles/Login.module.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -33,6 +33,7 @@ const Login = () => {
             type="password"
             placeholder="Password"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
           />
