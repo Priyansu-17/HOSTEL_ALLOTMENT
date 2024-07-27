@@ -1,9 +1,11 @@
-import React from "react";
-import CardContainer from '../components/CardContainer'
+import React from 'react';
+import CardContainer from '../components/CardContainer';
 const UserHome = () => {
-    return (<>
-        <CardContainer />
-    </>)
+  return (
+    <>
+      <CardContainer />
+    </>
+  );
 }
 
 export default UserHome;

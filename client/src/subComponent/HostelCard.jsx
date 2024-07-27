@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
 
-const HostelCard = ({ text }) => {
-    return (
-        <div className="hostelCard">
-            <h2>{text}</h2>
-        </div>
-    );
+const HostelCard = ({ imageSrc, altText, title }) => {
+  return (
+    <div className="hostel-image">
+      <img src={imageSrc} alt={altText} />
+      <p>{title}</p>
+    </div>
+  );
 };
 
 export default HostelCard;

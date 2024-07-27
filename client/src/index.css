@@ -1,13 +1,244 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primary-color: #990000;
+  --secondary-color: #ECF0F1;
+  --font-size: 1rem;
+  --header-height: 70px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--primary-color);
+  color: white;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: right;
+}
+
+.navbar-text {
+  margin-left:8%;
+  flex: 1;
+  text-align: center;
+  font-size: calc(var(--font-size) * 1.9);
+}
+
+
+.logout-btn {
+  border: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  margin: 15px;
+  color: white;
+  width: fit-content;
+  background-color: var(--primary-color);
+  transition: width 0.35s, background-color 0.35s, transform 0.35s;
+  font-size: calc(var(--font-size) * 1.2);
+  
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 3px;
+  cursor: pointer;
+  border-radius: 8px;
+  gap: 8px;
+}
+
+.logout-btn img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.logout-btn:hover {
+  background-color: rgb(110, 98, 98);
+  /* Darker shade for hover */
+  transform: translateY(-2px);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  padding: 2.5rem;
+  background-color: var(--secondary-color);
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.hostel-image {
+  background: white;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.hostel-image:hover {
+  transform: scale(1.05);
+}
+
+.hostel-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.hostel-image p {
+  margin: 1rem 0;
+  font-size: calc(var(--font-size) * 1.2);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .logo {
+      width: 40px;
+      height: 40px;
+  }
+  header{
+      height: calc(var(--header-height)*0.9);
+  }
+
+  .navbar-text {
+      font-size: calc(var(--font-size) * 1.7);
+  }
+  .logout-btn {
+      border: unset;
+      text-decoration: unset;
+      display: unset;
+      align-items: unset;
+      justify-content: unset;
+      padding: unset;
+      margin: unset;
+      color: unset;
+      width: unset;
+      background-color: unset;
+      transition: unset;
+      font-size: unset;
+      font-family: unset;
+      position: unset;
+      overflow: unset;
+      letter-spacing: unset;
+      cursor: unset;
+      border-radius: unset;
+      gap: unset;
+      justify-content: center;
+    }
+  
+    .logout-btn::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+  .logout-btn {
+          font-size: 0;
+          /* Hide text by setting font-size to 0 */
+        
+  }
+
+  .image-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+  }
+
+  .hostel-image p {
+      font-size: var(--font-size);
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+      width: 33px;
+      height: 33px;
+  }
+
+  header{
+      height: calc(var(--header-height)*0.8);
+  }
+  .navbar-text {
+      font-size: calc(var(--font-size) * 1.1);
+  }
+
+  .logout-btn {
+      border: unset;
+      text-decoration: unset;
+      display: unset;
+      align-items: unset;
+      justify-content: unset;
+      padding: unset;
+      margin: unset;
+      color: unset;
+      width: unset;
+      background-color: unset;
+      transition: unset;
+      font-size: unset;
+      font-family: unset;
+      position: unset;
+      overflow: unset;
+      letter-spacing: unset;
+      cursor: unset;
+      border-radius: unset;
+      gap: unset;
+      justify-content: center;
+    }
+  
+    .logout-btn::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+  .logout-btn {
+          font-size: 0;
+          /* Hide text by setting font-size to 0 */
+        
+  }
+
+  .image-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+  }
+
+  .hostel-image p {
+      font-size: calc(var(--font-size) * 0.9);
+  }
 }
