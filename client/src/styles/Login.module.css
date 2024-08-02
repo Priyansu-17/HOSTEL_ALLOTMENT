@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color:rgb(92,59,56);
+    background-color:rgb(210, 75, 79);
   }
   
   .loginForm {
@@ -36,7 +36,16 @@
   }
   
   .inputGroup {
+    padding-left: 2%;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 1rem;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border:none;
+    
   }
   
   .input {
@@ -45,20 +54,43 @@
     border: none;
     border-radius: 5px;
   }
+  .input:focus{
+    border:none;
+    outline: white;
+    
+  }
   
   .button {
     width: 100%;
     padding: 0.5rem;
-    background-color: #df8686;
+    background-color: #d44060;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    
+  }
+  .button:hover{
+    background-color: #ef053b;
   }
   
   .forgotPassword a {
+    
     color: #fff;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
+  }
+  .forgotPassword{
+    padding-top:7%;
+    
+    
+    text-align: center;
   }
   
+ .icon{
+  
+  height: 100%;
+  width:100%;
+  
+
+ }
