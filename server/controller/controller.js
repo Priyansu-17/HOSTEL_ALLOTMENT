@@ -1,7 +1,25 @@
 const db = require("../Database/mysql.js")
 
-const updateRoomInDatabase = (admissionNumber, newRoom) => {
-  const query = `UPDATE room_allotment SET room_number = ? WHERE student_alloted = ?`;
+
+const authenticateLogin = (req,username, password) => {
+  const query = `SELECT * FROM users WHERE admission_no = ? AND password = ?`;
+  return new Promise((resolve, reject) => {
+    db.query(query, [username, password], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        if (results.length > 0) {
+          resolve(true);
+          req.session.user= results[0];
+        } else {
+          resolve(false);
+        }
+      }
+    });
+  });
+};
+const updateRoomInDatabase = (hostel,admissionNumber, newRoom) => {
+  const query = `UPDATE ${hostel} SET room_number = ? WHERE student_alloted = ?`;
   return new Promise((resolve, reject) => {
     db.query(query, [newRoom, admissionNumber], (err, results) => {
       if (err) {
@@ -13,10 +31,10 @@ const updateRoomInDatabase = (admissionNumber, newRoom) => {
   });
 };
 
-const swapRoomsInDatabase = async (admissionNumber1, admissionNumber2) => {
+const swapRoomsInDatabase = async (hostel,admissionNumber1, admissionNumber2) => {
   try {
     // Retrieve current rooms for both students
-    const getRoomQuery = `SELECT student_alloted, room_number FROM room_allotment WHERE student_alloted IN (?, ?)`;
+    const getRoomQuery = `SELECT student_alloted, room_number FROM ${hostel} WHERE student_alloted IN (?, ?)`;
     const [results] = await new Promise((resolve, reject) => {
       db.query(getRoomQuery, [admissionNumber1, admissionNumber2], (err, results) => {
         if (err) {
@@ -98,6 +116,7 @@ const fetchFloors = () => {
 };
 
 module.exports = {
+  authenticateLogin,
   updateRoomInDatabase,
   swapRoomsInDatabase,
   fetchSeats,

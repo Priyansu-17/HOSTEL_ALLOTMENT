@@ -12,10 +12,25 @@ module.exports = function (app) {
   // API
   const API_TO_UPDATE_ROOM = '/api/updateRoom';
   const API_TO_SWAP_ROOMS = '/api/swapRooms';
+  const API_TO_POST_LOGIN_CREDENTIALS = '/login-details'
 
-  // app.get(ROUTE_FOR_HOSTEL_PAGE, (req, res) => {
-  //   res.sendFile(HOSTEL);
-  // });
+  app.post(API_TO_POST_LOGIN_CREDENTIALS, async(req, res) => {
+    const { username,password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ error: 'username and password are required' });
+    }
+    try {
+      const isAuthenticated = await controller.authenticateLogin(req,username, password);
+      if (isAuthenticated) {
+        res.json({ success: true, message: 'Login successful' });
+      } else {
+        res.json({ success: false, message: 'Invalid username or password' });
+      }
+    } catch (err) {
+      console.error('Error during authentication:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
 
   app.put(API_TO_UPDATE_ROOM, async (req, res) => {
     const { admissionNumber, newRoom } = req.body;
