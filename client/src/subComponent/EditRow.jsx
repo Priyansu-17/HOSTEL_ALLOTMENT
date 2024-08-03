@@ -6,7 +6,7 @@ const EditRow = ({ admissionNumber, currentRoom, onUpdateRoom }) => {
 
   const handleEditClick = async () => {
     if (isEditing) {
-      const response = await fetch('/api/updateRoom', {
+      const response = await fetch('http://localhost:3001/api/updateRoom', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -20,6 +20,7 @@ const EditRow = ({ admissionNumber, currentRoom, onUpdateRoom }) => {
       if (response.ok) {
         onUpdateRoom(admissionNumber, newRoom);
       } else {
+        alert("Failed to update room")
         console.error('Failed to update room');
       }
     }

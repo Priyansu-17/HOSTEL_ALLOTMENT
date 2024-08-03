@@ -33,7 +33,7 @@ const TableContainer = () => {
     });
 
     try {
-      const response = await fetch('/upload', {
+      const response = await fetch('http://localhost:3001/upload', {
         method: 'POST',
         body: formData,
       });

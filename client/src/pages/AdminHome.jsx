@@ -5,9 +5,18 @@ import SwapContainer from '../components/SwapContainer.jsx';
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState('table');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
   return (
     <>
-      <div className='admin-sidebar'>
+      {/* Hamburger menu for small screens */}
+      <div className='hamburger-menu' onClick={toggleSidebar}>
+        ☰
+      </div>
+      {/* Sidebar with conditional class for toggling */}
+      <div className={`admin-sidebar ${isSidebarOpen ? 'sidebar-active' : ''}`}>
         <button className={activeComponent === 'table' ? 'active' : ''} onClick={() => setActiveComponent('table')}>Table</button>
         <button className={activeComponent === 'edit' ? 'active' : ''} onClick={() => setActiveComponent('edit')}>Edit</button>
         <button className={activeComponent === 'swap' ? 'active' : ''} onClick={() => setActiveComponent('swap')}>Swap</button>

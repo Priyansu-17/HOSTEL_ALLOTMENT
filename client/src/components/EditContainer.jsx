@@ -6,6 +6,21 @@ const EditContainer = () => {
     { admissionNumber: 'A001', currentRoom: '101' },
     { admissionNumber: 'A002', currentRoom: '102' },
     { admissionNumber: 'A003', currentRoom: '103' },
+    { admissionNumber: 'A001', currentRoom: '101' },
+    { admissionNumber: 'A002', currentRoom: '102' },
+    { admissionNumber: 'A003', currentRoom: '103' },
+    { admissionNumber: 'A001', currentRoom: '101' },
+    { admissionNumber: 'A002', currentRoom: '102' },
+    { admissionNumber: 'A003', currentRoom: '103' },
+    { admissionNumber: 'A001', currentRoom: '101' },
+    { admissionNumber: 'A002', currentRoom: '102' },
+    { admissionNumber: 'A003', currentRoom: '103' },
+    { admissionNumber: 'A001', currentRoom: '101' },
+    { admissionNumber: 'A002', currentRoom: '102' },
+    { admissionNumber: 'A003', currentRoom: '103' },
+    { admissionNumber: 'A001', currentRoom: '101' },
+    { admissionNumber: 'A002', currentRoom: '102' },
+    { admissionNumber: 'A003', currentRoom: '103' },
     // Add more rows as needed
   ]);
 
@@ -20,7 +35,8 @@ const EditContainer = () => {
   };
 
   return (
-    <table>
+    <div className="edit-container">
+       <table>
       <thead>
         <tr>
           <th>Admission Number</th>
@@ -39,6 +55,8 @@ const EditContainer = () => {
         ))}
       </tbody>
     </table>
+    </div>
+   
   );
 };
 
