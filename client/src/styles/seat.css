@@ -1,0 +1,22 @@
+/* src/components/Seat.css */
+.seat {
+  width: 80px;
+  height: 80px;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.seat.available {
+  background-color: #76c7c0;
+}
+
+.seat.selected {
+  background-color: #ffc107;
+}
+
+.seat.alloted {
+  background-color: #d9534f;
+  cursor: not-allowed;
+}

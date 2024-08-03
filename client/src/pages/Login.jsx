@@ -1,6 +1,7 @@
 // src/Login.js
 import React, { useState } from 'react';
 import styles from '../styles/Login.module.css';
+import { FaUser, FaLock } from 'react-icons/fa';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -20,6 +21,8 @@ const Login = () => {
         <h2>Log In!</h2>
         <p>Enter your details to get access</p>
         <div className={styles.inputGroup}>
+
+        <FaUser className="icon" />
           <input
             type="text"
             placeholder="Username"
@@ -29,6 +32,7 @@ const Login = () => {
           />
         </div>
         <div className={styles.inputGroup}>
+        <FaLock className="icon" />
           <input
             type="password"
             placeholder="Password"
