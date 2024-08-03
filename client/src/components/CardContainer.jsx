@@ -13,16 +13,16 @@ import topaz from '../images/topaz.jpg';
 
 const CardContainer = () => {
   const hostels = [
-    { imageSrc: amber, altText: 'Amber Hostel', title: 'Amber Hostel' },
-    { imageSrc: aquamarine, altText: 'Aquamarine Hostel', title: 'Aquamarine Hostel' },
-    { imageSrc: diamond, altText: 'Diamond Hostel', title: 'Diamond Hostel' },
-    { imageSrc: emerald, altText: 'Emerald Hostel', title: 'Emerald Hostel' },
-    { imageSrc: jasper, altText: 'Jasper Hostel', title: 'Jasper Hostel' },
-    { imageSrc: intHostel, altText: 'Int Hostel', title: 'Int Hostel' },
-    { imageSrc: opal, altText: 'Opal Hostel', title: 'Opal Hostel' },
-    { imageSrc: rosaline, altText: 'Rosaline Hostel', title: 'Rosaline Hostel' },
-    { imageSrc: sapphire, altText: 'Sapphire Hostel', title: 'Sapphire Hostel' },
-    { imageSrc: topaz, altText: 'Topaz Hostel', title: 'Topaz Hostel' },
+    { imageSrc: amber, altText: 'Amber Hostel', title: 'Amber' },
+    { imageSrc: aquamarine, altText: 'Aquamarine Hostel', title: 'Aquamarine' },
+    { imageSrc: diamond, altText: 'Diamond Hostel', title: 'Diamond' },
+    { imageSrc: emerald, altText: 'Emerald Hostel', title: 'Emerald' },
+    { imageSrc: jasper, altText: 'Jasper Hostel', title: 'Jasper' },
+    { imageSrc: intHostel, altText: 'Int Hostel', title: 'Int' },
+    { imageSrc: opal, altText: 'Opal Hostel', title: 'Opal' },
+    { imageSrc: rosaline, altText: 'Rosaline Hostel', title: 'Rosaline' },
+    { imageSrc: sapphire, altText: 'Sapphire Hostel', title: 'Sapphire' },
+    { imageSrc: topaz, altText: 'Topaz Hostel', title: 'Topaz' },
   ];
 
   return (

@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Navbar';
 import UserHome from './pages/UserHome';
 import Login from './pages/Login';
-import styles from './index.css';
-
+import Hostel from './pages/Hostel';
+import AdminHome from './pages/AdminHome'
 const LayoutWithHeader = ({ children }) => (
-  <body>
+  <>
     <Header />
     <main>{children}</main>
-  </body>
+  </>
 );
 
 function App() {
@@ -18,8 +18,8 @@ function App() {
       <Routes>
         {/* Routes with Header */}
         <Route path="/" element={<LayoutWithHeader><UserHome /></LayoutWithHeader>} />
-        {/* <Route path="/hostel" element={<LayoutWithHeader><Hostel /></LayoutWithHeader>} />
-        <Route path="/admin" element={<LayoutWithHeader><AdminHome /></LayoutWithHeader>} /> */}
+        <Route path="/Hostel/:id" element={<LayoutWithHeader><Hostel /></LayoutWithHeader>} />
+        <Route path="/admin" element={<LayoutWithHeader><AdminHome /></LayoutWithHeader>} />
         
         {/* Route without Header */}
         <Route path="/login" element={<Login />} />

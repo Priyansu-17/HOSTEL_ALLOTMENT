@@ -16,6 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-width: 100vw;
 }
 
 header {
@@ -26,6 +27,8 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
+  position: fixed;
+  width: 100%;
 }
 
 .header-content {
@@ -84,10 +87,11 @@ header {
 }
 
 main {
-  flex: 1;
   display: flex;
-  padding: 2rem;
   background-color: var(--secondary-color);
+  margin-top: 70px;
+  min-height: calc(100vh - var(--header-height));
+  min-width: 100vw;
 }
 
 .image-grid {
@@ -126,6 +130,227 @@ main {
   font-size: calc(var(--font-size) * 1.2);
   color: black;
 }
+
+/* admin header */
+.admin-sidebar {
+  padding-top: 3%;
+  display: flex;
+  width: 20%;
+  min-height: 100%;
+  flex-direction: column;
+  background-color: var(--primary-color);
+  position: fixed;
+}
+
+
+.User{
+  padding: 3%;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  height: auto;
+  background-color: var(--secondary-color);
+  width: 100%;
+}
+
+.admin{
+  margin-left: 20%;
+  width: 80%;
+  margin-top: 3%;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  height: auto;
+  background-color: var(--secondary-color);
+}
+
+.admin-sidebar button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  transition: background-color 0.3s;
+  height: 50px;
+}
+
+.admin-sidebar button:hover {
+  background-color: #6b0404;
+}
+
+.admin-sidebar button.active {
+  color: white;
+  background-color: #6b0404;
+}
+
+/* admin-form */
+
+
+
+.admin-form{
+  background-color: #990000;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 60px -12px, rgba(0, 0, 0, 0.35) 0px 18px 36px -18px;
+  max-width: 500px;
+  padding: 20px;
+}
+.admin-row-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.submit-btn{
+  position: relative;
+  left: 15%;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #E5E5E5;
+  width: 70%;
+  font-weight:bolder;
+  font-size: 18px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.admin-row-title {
+  flex: 1;
+  font-weight: bold;
+  padding-right: 20px;
+  text-align: center;
+}
+
+.admin-row-file-upload {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-input {
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+/* EditableTable.css */
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+thead tr {
+  background-color: #990000;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+th, td {
+  padding: 12px 15px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+  border-bottom: 2px solid #990000;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #990000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #990000;
+}
+
+
+
+/* SwapContainer.css */
+
+
+.swap-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  margin-top: 5%;
+  height: fit-content;
+}
+
+.swap-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #990000;
+}
+
+.swap-container p {
+  margin-bottom: 30px;
+  color: #666666;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333333;
+}
+
+.form-group input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.swap-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #990000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 88%;
+}
+
+.swap-submit-btn:hover {
+  opacity: 100%;
+}
+
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -185,6 +410,37 @@ main {
   .hostel-image p {
       font-size: var(--font-size);
   }
+  .admin-form{
+    width: 350px;
+    padding: 15px;
+  }
+  .admin-row-div{
+    padding: 7px;
+  }
+  .admin-row-title {
+    padding-right: 16px;
+  }
+  .file-input{
+    font-size: 14px;
+  }
+
+  .swap-container{
+    width: 70%;
+    font-size: 12px;
+    padding: 20px;
+  }
+  .swap-container p{
+    font-size: 10px;
+  }
+
+  .swap-submit-btn{
+    font-size: 12px;
+  }
+  main {
+    min-height: calc(100vh - var(--header-height) * 0.9);
+    margin-top: calc(var(--header-height)*0.9);
+  }
+  
 }
 
 @media (max-width: 480px) {
@@ -196,6 +452,11 @@ main {
   header{
       height: calc(var(--header-height)*0.8);
   }
+  main {
+    min-height: calc(100vh - var(--header-height) * 0.8);
+    margin-top: calc(var(--header-height)*0.8);
+  }
+  
   .navbar-text {
       font-size: calc(var(--font-size) * 1.1);
   }
@@ -244,5 +505,21 @@ main {
 
   .hostel-image p {
       font-size: calc(var(--font-size) * 0.9);
+  }
+
+  .admin-form{
+    width: 250px;
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .admin-row-div{
+    padding: 4px;
+  }
+  .admin-row-title {
+    padding-right: 12px;
+  }
+  .file-input{
+    font-size: 12px;
   }
 }
