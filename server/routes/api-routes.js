@@ -1,6 +1,6 @@
 const path = require('path');
 const controller = require('../controller/controller');
-
+require('dotenv').config();
 module.exports = function (app) {
 
   // // PAGES
@@ -22,7 +22,12 @@ module.exports = function (app) {
     try {
       const isAuthenticated = await controller.authenticateLogin(req,username, password);
       if (isAuthenticated) {
-        res.json({ success: true, message: 'Login successful' });
+        if(username===process.env.admin_username && password===process.env.admin_password){
+          res.json({ success: true, role:'admin', message: 'Login successful' });
+        }
+        else{
+          res.json({ success: true, role:'student', message: 'Login successful' });
+        }
       } else {
         res.json({ success: false, message: 'Invalid username or password' });
       }
