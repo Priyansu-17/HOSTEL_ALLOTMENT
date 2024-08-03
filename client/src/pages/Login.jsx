@@ -10,8 +10,25 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
-    console.log('Username:', username);
-    console.log('Password:', password);
+    fetch('http://localhost:3001/login-details', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username:username, password:password })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Update the seat status in the UI
+          alert("Successfully logged in");
+          // Redirect to the desired page or perform other actions
+        } else {
+          alert('Failed to log in.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      });
   };
 
   return (
@@ -21,25 +38,25 @@ const Login = () => {
         <h2>Log In!</h2>
         <p>Enter your details to get access</p>
         <div className={styles.inputGroup}>
-
-        <FaUser className="icon" />
+          <FaUser className="icon" />
           <input
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className={styles.input}
+            required
           />
         </div>
         <div className={styles.inputGroup}>
-        <FaLock className="icon" />
+          <FaLock className="icon" />
           <input
             type="password"
             placeholder="Password"
             value={password}
-            required
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
+            required
           />
         </div>
         <button type="submit" className={styles.button}>Log In</button>
