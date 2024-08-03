@@ -46,7 +46,7 @@ const swapRoomsInDatabase = async (admissionNumber1, admissionNumber2) => {
 };
 
 const fetchSeats = (block, floor) => {
-  const query = 'SELECT * FROM total WHERE block = ? AND floor = ?';
+  const query = 'SELECT * FROM JASPER WHERE block = ? AND floor = ?';
   return new Promise((resolve, reject) => {
     db.query(query, [block, floor], (err, results) => {
       if (err) {
@@ -59,7 +59,7 @@ const fetchSeats = (block, floor) => {
 };
 
 const updateSeatStatus = (id, status) => {
-  const query = 'UPDATE total SET status = ? WHERE id = ?';
+  const query = 'UPDATE JASPER SET status = ? WHERE id = ?';
   return new Promise((resolve, reject) => {
     db.query(query, [status, id], (err) => {
       if (err) {
@@ -72,7 +72,7 @@ const updateSeatStatus = (id, status) => {
 };
 
 const fetchBlocks = () => {
-  const query = 'SELECT DISTINCT block FROM total';
+  const query = 'SELECT DISTINCT block FROM JASPER';
   return new Promise((resolve, reject) => {
     db.query(query, (err, results) => {
       if (err) {
@@ -85,7 +85,7 @@ const fetchBlocks = () => {
 };
 
 const fetchFloors = () => {
-  const query = 'SELECT DISTINCT floor FROM total ORDER BY floor';
+  const query = 'SELECT DISTINCT floor FROM JASPER ORDER BY floor';
   return new Promise((resolve, reject) => {
     db.query(query, (err, results) => {
       if (err) {

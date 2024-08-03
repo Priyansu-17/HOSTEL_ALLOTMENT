@@ -3,19 +3,19 @@ const controller = require('../controller/controller');
 
 module.exports = function (app) {
 
-  // PAGES
-  const HOSTEL = path.join(__dirname, "../../client/public", "index.html");
+  // // PAGES
+  // const HOSTEL = path.join(__dirname, "../../client/public", "index.html");
 
-  // public routes
-  const ROUTE_FOR_HOSTEL_PAGE = '/Hostel/:id';
+  // // public routes
+  // const ROUTE_FOR_HOSTEL_PAGE = '/Hostel/:id';
 
   // API
   const API_TO_UPDATE_ROOM = '/api/updateRoom';
   const API_TO_SWAP_ROOMS = '/api/swapRooms';
 
-  app.get(ROUTE_FOR_HOSTEL_PAGE, (req, res) => {
-    res.sendFile(HOSTEL);
-  });
+  // app.get(ROUTE_FOR_HOSTEL_PAGE, (req, res) => {
+  //   res.sendFile(HOSTEL);
+  // });
 
   app.put(API_TO_UPDATE_ROOM, async (req, res) => {
     const { admissionNumber, newRoom } = req.body;
