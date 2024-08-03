@@ -10,7 +10,7 @@ const authenticateLogin = (req,username, password) => {
       } else {
         if (results.length > 0) {
           resolve(true);
-          req.session.user= results[0];
+          req.session.user= results[0].admissionNumber;
         } else {
           resolve(false);
         }
