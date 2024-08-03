@@ -1,0 +1,12 @@
+
+.container {
+  text-align: center;
+}
+
+.seating {
+  display: grid;
+  grid-template-columns: repeat(11, 80px);
+  gap: 10px;
+  justify-content: center;
+  margin: 20px auto;
+}
