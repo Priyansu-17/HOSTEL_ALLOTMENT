@@ -1,13 +1,52 @@
 
 .container {
   text-align: center;
+  
   width: 100%;
 }
 
 .seating {
-  display: grid;
-  grid-template-columns: repeat(11, 80px);
-  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap ;
   justify-content: center;
-  margin: 20px auto;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.filters label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.filters select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+button:disabled {
+  background-color: #90a4ae;
+  cursor: not-allowed;
 }

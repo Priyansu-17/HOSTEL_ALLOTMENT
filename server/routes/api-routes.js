@@ -104,9 +104,9 @@ module.exports = function (app) {
   });
 
   app.post('/api/seats', async (req, res) => {
-    const { id, status } = req.body;
+    const { id, status ,user } = req.body;
     try {
-      const result = await controller.updateSeatStatus(id, status);
+      const result = await controller.updateSeatStatus(id, status,user);
       res.json(result);
     } catch (error) {
       res.status(500).send(error);
