@@ -1,6 +1,7 @@
 const path = require('path');
 const controller = require('../controller/controller');
 require('dotenv').config();
+
 module.exports = function (app) {
 
   // // PAGES
@@ -14,19 +15,19 @@ module.exports = function (app) {
   const API_TO_SWAP_ROOMS = '/api/swapRooms';
   const API_TO_POST_LOGIN_CREDENTIALS = '/login-details'
 
-  app.post(API_TO_POST_LOGIN_CREDENTIALS, async(req, res) => {
-    const { username,password } = req.body;
+  app.post(API_TO_POST_LOGIN_CREDENTIALS, async (req, res) => {
+    const { username, password } = req.body;
     if (!username || !password) {
       return res.status(400).json({ error: 'username and password are required' });
     }
     try {
-      const isAuthenticated = await controller.authenticateLogin(req,username, password);
+      const isAuthenticated = await controller.authenticateLogin(req, username, password);
       if (isAuthenticated) {
-        if(username===process.env.admin_username && password===process.env.admin_password){
-          res.json({ success: true, role:'admin', message: 'Login successful' });
+        if (username === process.env.admin_username && password === process.env.admin_password) {
+          res.json({ success: true, role: 'admin', message: 'Login successful' });
         }
-        else{
-          res.json({ success: true, role:'student', message: 'Login successful' });
+        else {
+          res.json({ success: true, role: 'student', message: 'Login successful' });
         }
       } else {
         res.json({ success: false, message: 'Invalid username or password' });
@@ -34,6 +35,28 @@ module.exports = function (app) {
     } catch (err) {
       console.error('Error during authentication:', err);
       res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  });
+
+  app.get('/api/check-session', (req, res) => {
+    console.log("from check session",req.session.user);
+    if (req.session.user) {
+      res.json({ isAuthenticated: true, user: req.session.user });
+    } else {
+      res.json({ isAuthenticated: false });
+    }
+  });
+  app.get('/api/logout', (req, res) => {
+    if (req.session.user) {
+      req.session.destroy(err => {
+        if (err) {
+          return res.json({ success: false });
+        }
+        res.clearCookie('user_sid');
+        return res.json({ success: true });
+      });
+    } else {
+      res.json({ success: false });
     }
   });
 
@@ -105,5 +128,5 @@ module.exports = function (app) {
     }
   });
 
-  
+
 }

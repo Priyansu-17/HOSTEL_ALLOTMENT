@@ -1,7 +1,7 @@
 const db = require("../Database/mysql.js")
 
 
-const authenticateLogin = (req,username, password) => {
+const authenticateLogin = async (req,username, password) => {
   const query = `SELECT * FROM users WHERE admission_no = ? AND password = ?`;
   return new Promise((resolve, reject) => {
     db.query(query, [username, password], (err, results) => {
@@ -10,7 +10,8 @@ const authenticateLogin = (req,username, password) => {
       } else {
         if (results.length > 0) {
           resolve(true);
-          req.session.user= results[0].admissionNumber;
+          
+          req.session.user= results[0].admission_no;
         } else {
           resolve(false);
         }

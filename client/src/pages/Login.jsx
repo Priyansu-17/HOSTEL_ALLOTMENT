@@ -1,11 +1,13 @@
 // src/Login.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
 import { FaUser, FaLock } from 'react-icons/fa';
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate=useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,16 +15,23 @@ const Login = () => {
     fetch('http://localhost:3001/login-details', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username:username, password:password })
+      body: JSON.stringify({ username:username, password:password }),
+      credentials: "include"
     })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
           // Update the seat status in the UI
           alert("Successfully logged in");
+          setIsAuthenticated(true);
+          if(data.role==="admin")
+          navigate('/admin-home');
+          else{
+            navigate("/student-home");
+          }
           // Redirect to the desired page or perform other actions
         } else {
-          alert('Failed to log in.');
+          alert('Failed to Log In , Invalid credentials');
         }
       })
       .catch(error => {
@@ -61,7 +70,7 @@ const Login = () => {
         </div>
         <button type="submit" className={styles.button}>Log In</button>
         <div className={styles.forgotPassword}>
-          <a href="#">Forgot Password?</a>
+          {/* <a href="#">Forgot Password?</a> */}
         </div>
       </form>
     </div>

@@ -11,18 +11,18 @@ const Hostel = () => {
     const [selectedSeat, setSelectedSeat] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/blocks')
+        fetch('http://localhost:3001/api/blocks', { credentials: 'include' })
             .then(response => response.json())
             .then(data => setBlocks(data));
 
-        fetch('http://localhost:3001/api/floors')
+        fetch('http://localhost:3001/api/floors', { credentials: 'include' })
             .then(response => response.json())
             .then(data => setFloors(data));
     }, []);
 
     useEffect(() => {
         if (selectedBlock && selectedFloor !== '') {
-            fetch(`http://localhost:3001/api/seats?block=${selectedBlock}&floor=${selectedFloor}`)
+            fetch(`http://localhost:3001/api/seats?block=${selectedBlock}&floor=${selectedFloor}`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => setSeats(data));
         }
@@ -47,19 +47,19 @@ const Hostel = () => {
             fetch('http://localhost:3001/api/seats', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: selectedSeat.id, status: 'alloted' })
+                body: JSON.stringify({ id: selectedSeat.id, status: 'alloted' }),
+                credentials: 'include'
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         // Update the seat status in the UI
-                        alert("Successfully confirmed ur seat")
+                        alert("Successfully confirmed your seat");
                         const updatedSeats = seats.map(seat =>
                             seat.id === selectedSeat.id ? { ...seat, status: 'alloted' } : seat
                         );
                         setSeats(updatedSeats);
                         setSelectedSeat(null); // Clear the selected seat after finalizing
-                        
                     } else {
                         alert('Failed to finalize seat selection.');
                     }
