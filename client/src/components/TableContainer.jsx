@@ -46,8 +46,12 @@ const TableContainer = () => {
 
       if (response.ok) {
         console.log('Files uploaded successfully');
+        alert('Files uploaded successfully');
+        setFiles({});
+        setTitles({});
       } else {
         console.error('File upload failed');
+        alert('File upload failed')
       }
     } catch (error) {
       console.error('Error:', error);
