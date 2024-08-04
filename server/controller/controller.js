@@ -164,6 +164,33 @@ const updateHostelStudents = async (req, res) => {
   }
 };
 
+const downloadAllotedList = async (req, res) => {
+  try {
+    // Fetch data from the database
+    const [rows] = await db.promise().query("SELECT student_alloted, room_number FROM JASPER WHERE student_alloted IS NOT NULL");
+
+    // Create a new workbook and worksheet
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+
+    // Add the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+
+    // Write the workbook to a buffer
+    const buffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    // Set the response headers and send the file
+    res.setHeader('Content-Disposition', 'attachment; filename="students.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(buffer);
+  } catch (error) {
+    console.error('Error generating Excel file:', error);
+    res.status(500).send('An error occurred while generating the Excel file');
+  }
+};
+
+
+
 module.exports = {
   authenticateLogin,
   updateRoomInDatabase,
@@ -172,5 +199,6 @@ module.exports = {
   updateSeatStatus,
   fetchBlocks,
   fetchFloors,
-  updateHostelStudents
+  updateHostelStudents,
+  downloadAllotedList
 };

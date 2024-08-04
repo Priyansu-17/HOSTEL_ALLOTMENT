@@ -52,15 +52,16 @@ module.exports = function (app) {
     if (req.session.user) {
       req.session.destroy(err => {
         if (err) {
-          return res.json({ success: false });
+          return res.status(500).json({ success: false, message: 'Failed to destroy session' });
         }
         res.clearCookie('user_sid');
-        return res.json({ success: true });
+        return res.status(200).json({ success: true, message: 'Logged out successfully' });
       });
     } else {
-      res.json({ success: false });
+      res.status(200).json({ success: false, message: 'No user session found' });
     }
   });
+  
 
   app.put(API_TO_UPDATE_ROOM, async (req, res) => {
     const { admissionNumber, newRoom } = req.body;
@@ -134,6 +135,11 @@ module.exports = function (app) {
   app.post('/upload', upload.any(), async (req, res) => {
     await controller.updateHostelStudents(req,res);
   });
+
+
+app.get('/api/download', async (req, res) => {
+  await controller.downloadAllotedList(req,res);
+});
 
 
 }
