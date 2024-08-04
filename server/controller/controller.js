@@ -77,10 +77,10 @@ const fetchSeats = (block, floor) => {
   });
 };
 
-const updateSeatStatus = (id, status) => {
-  const query = 'UPDATE JASPER SET status = ? WHERE id = ?';
+const updateSeatStatus = (id, status ,user) => {
+  const query = 'UPDATE JASPER SET status = ? , student_alloted = ? WHERE id = ?';
   return new Promise((resolve, reject) => {
-    db.query(query, [status, id], (err) => {
+    db.query(query, [status, user, id], (err) => {
       if (err) {
         reject(err);
       } else {

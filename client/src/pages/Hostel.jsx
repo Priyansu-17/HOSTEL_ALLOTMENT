@@ -9,6 +9,7 @@ const Hostel = () => {
     const [selectedBlock, setSelectedBlock] = useState('');
     const [selectedFloor, setSelectedFloor] = useState('');
     const [selectedSeat, setSelectedSeat] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:3001/api/blocks', { credentials: 'include' })
@@ -18,6 +19,14 @@ const Hostel = () => {
         fetch('http://localhost:3001/api/floors', { credentials: 'include' })
             .then(response => response.json())
             .then(data => setFloors(data));
+
+        fetch('http://localhost:3001/api/check-session', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.isAuthenticated) {
+                    setUser(data.user);
+                }
+            });
     }, []);
 
     useEffect(() => {
@@ -25,6 +34,7 @@ const Hostel = () => {
             fetch(`http://localhost:3001/api/seats?block=${selectedBlock}&floor=${selectedFloor}`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => setSeats(data));
+                
         }
     }, [selectedBlock, selectedFloor]);
 
@@ -43,11 +53,11 @@ const Hostel = () => {
     };
 
     const handleFinalizeSelection = () => {
-        if (selectedSeat) {
+        if (selectedSeat && user) {
             fetch('http://localhost:3001/api/seats', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: selectedSeat.id, status: 'alloted' }),
+                body: JSON.stringify({ id: selectedSeat.id, status: 'alloted',user:user }),
                 credentials: 'include'
             })
                 .then(response => response.json())
@@ -56,7 +66,7 @@ const Hostel = () => {
                         // Update the seat status in the UI
                         alert("Successfully confirmed your seat");
                         const updatedSeats = seats.map(seat =>
-                            seat.id === selectedSeat.id ? { ...seat, status: 'alloted' } : seat
+                            seat.id === selectedSeat.id ? { ...seat, status: 'alloted' , student_alloted:user} : seat
                         );
                         setSeats(updatedSeats);
                         setSelectedSeat(null); // Clear the selected seat after finalizing
@@ -73,7 +83,7 @@ const Hostel = () => {
 
     return (
         <div className="container">
-            <h1>Select Your Seat</h1>
+            <h1>Hello {user} Select Your Room</h1>
             <div className="filters">
                 <label>
                     Block:
@@ -100,11 +110,15 @@ const Hostel = () => {
                         key={seat.id}
                         roomNumber={seat.room_number}
                         status={seat.status}
+                        user={seat.student_alloted}
                         onClick={() => handleSeatClick(index)}
                     />
                 ))}
             </div>
-            <button onClick={handleFinalizeSelection}>Finalize Your Seat Selection</button>
+            
+            {selectedBlock && selectedFloor && (
+                <button onClick={handleFinalizeSelection}>Finalize Your Seat Selection</button>
+            )}
         </div>
     );
 };
