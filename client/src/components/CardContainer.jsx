@@ -23,6 +23,26 @@ const CardContainer = () => {
     { imageSrc: rosaline, altText: 'Rosaline Hostel', title: 'Rosaline' },
     { imageSrc: sapphire, altText: 'Sapphire Hostel', title: 'Sapphire' },
     { imageSrc: topaz, altText: 'Topaz Hostel', title: 'Topaz' },
+    { imageSrc: amber, altText: 'Amber Hostel', title: 'Amber' },
+    { imageSrc: aquamarine, altText: 'Aquamarine Hostel', title: 'Aquamarine' },
+    { imageSrc: diamond, altText: 'Diamond Hostel', title: 'Diamond' },
+    { imageSrc: emerald, altText: 'Emerald Hostel', title: 'Emerald' },
+    { imageSrc: jasper, altText: 'Jasper Hostel', title: 'Jasper' },
+    { imageSrc: intHostel, altText: 'Int Hostel', title: 'Int' },
+    { imageSrc: opal, altText: 'Opal Hostel', title: 'Opal' },
+    { imageSrc: rosaline, altText: 'Rosaline Hostel', title: 'Rosaline' },
+    { imageSrc: sapphire, altText: 'Sapphire Hostel', title: 'Sapphire' },
+    { imageSrc: topaz, altText: 'Topaz Hostel', title: 'Topaz' },
+    { imageSrc: amber, altText: 'Amber Hostel', title: 'Amber' },
+    { imageSrc: aquamarine, altText: 'Aquamarine Hostel', title: 'Aquamarine' },
+    { imageSrc: diamond, altText: 'Diamond Hostel', title: 'Diamond' },
+    { imageSrc: emerald, altText: 'Emerald Hostel', title: 'Emerald' },
+    { imageSrc: jasper, altText: 'Jasper Hostel', title: 'Jasper' },
+    { imageSrc: intHostel, altText: 'Int Hostel', title: 'Int' },
+    { imageSrc: opal, altText: 'Opal Hostel', title: 'Opal' },
+    { imageSrc: rosaline, altText: 'Rosaline Hostel', title: 'Rosaline' },
+    { imageSrc: sapphire, altText: 'Sapphire Hostel', title: 'Sapphire' },
+    { imageSrc: topaz, altText: 'Topaz Hostel', title: 'Topaz' }
   ];
 
   return (

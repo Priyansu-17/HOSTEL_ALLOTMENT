@@ -20,7 +20,7 @@ const EditRow = ({ admissionNumber, currentRoom, onUpdateRoom }) => {
       if (response.ok) {
         onUpdateRoom(admissionNumber, newRoom);
       } else {
-        alert("Failed to update room")
+        alert("Failed to update room");
         console.error('Failed to update room');
       }
     }
