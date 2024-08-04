@@ -16,11 +16,16 @@ const TableContainer = () => {
   ];
 
   const [files, setFiles] = useState({});
+  const [titles, setTitles] = useState({});
 
   const handleFileChange = (index, file) => {
     setFiles(prevFiles => ({
       ...prevFiles,
       [index]: file,
+    }));
+    setTitles(prevTitles => ({
+      ...prevTitles,
+      [index]: rows[index].title,
     }));
   };
 
@@ -30,6 +35,7 @@ const TableContainer = () => {
     const formData = new FormData();
     Object.keys(files).forEach(index => {
       formData.append(`file${index}`, files[index]);
+      formData.append(`title${index}`, titles[index]);
     });
 
     try {

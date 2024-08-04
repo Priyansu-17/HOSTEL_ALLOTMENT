@@ -1,5 +1,5 @@
 const db = require("../Database/mysql.js")
-
+const XLSX = require('xlsx');
 
 const authenticateLogin = (req,username, password) => {
   const query = `SELECT * FROM users WHERE admission_no = ? AND password = ?`;
@@ -115,6 +115,54 @@ const fetchFloors = () => {
   });
 };
 
+
+
+const updateHostelStudents = async (req, res) => {
+  try {
+    const files = req.files;
+    const titles = req.body;
+
+    for (let index = 0; index < files.length; index++) {
+      const file = files[index];
+      const title = titles[`title${index}`];
+
+      if (!title) {
+        return res.status(400).send(`Title for file ${file.originalname} is missing`);
+      }
+
+      // Read the Excel file
+      const workbook = XLSX.readFile(file.path);
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      // Process the data
+      const admissions = data.map(row => row[0]); // Assuming admission numbers are in the first column
+
+      if (admissions.length === 0) {
+        return res.status(400).send(`No admission numbers found in file ${file.originalname}`);
+      }
+
+      // Create or replace table with a primary key
+      const tableName = `${title}-students`;
+      await db.promise().query(`DROP TABLE IF EXISTS \`${tableName}\``);
+      await db.promise().query(`CREATE TABLE \`${tableName}\` (
+        admission_no VARCHAR(255) PRIMARY KEY
+      )`);
+
+      // Insert admission numbers
+      const insertQuery = `INSERT INTO \`${tableName}\` (admission_no) VALUES ?`;
+      const values = admissions.map(admission => [admission]);
+      await db.promise().query(insertQuery, [values]);
+    }
+
+    res.status(200).send('Files processed and tables updated successfully');
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('An error occurred');
+  }
+};
+
 module.exports = {
   authenticateLogin,
   updateRoomInDatabase,
@@ -122,5 +170,6 @@ module.exports = {
   fetchSeats,
   updateSeatStatus,
   fetchBlocks,
-  fetchFloors
+  fetchFloors,
+  updateHostelStudents
 };

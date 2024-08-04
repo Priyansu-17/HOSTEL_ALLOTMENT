@@ -23,6 +23,7 @@ const Login = () => {
           // Redirect to the desired page or perform other actions
         } else {
           alert('Failed to log in.');
+          setPassword('');
         }
       })
       .catch(error => {

@@ -10,8 +10,6 @@ const app = express();
 const db=require("./Database/mysql")
 
 
-
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
