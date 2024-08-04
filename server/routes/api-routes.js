@@ -1,5 +1,7 @@
 const path = require('path');
 const controller = require('../controller/controller');
+const multer = require('multer');
+
 require('dotenv').config();
 
 module.exports = function (app) {
@@ -126,6 +128,11 @@ module.exports = function (app) {
     } catch (error) {
       res.status(500).send(error);
     }
+  });
+
+  const upload = multer({ dest: 'uploads/' });
+  app.post('/upload', upload.any(), async (req, res) => {
+    await controller.updateHostelStudents(req,res);
   });
 
 

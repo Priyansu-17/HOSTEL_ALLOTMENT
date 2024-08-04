@@ -32,6 +32,7 @@ const Login = ({ setIsAuthenticated }) => {
           // Redirect to the desired page or perform other actions
         } else {
           alert('Failed to Log In , Invalid credentials');
+          setPassword('');
         }
       })
       .catch(error => {

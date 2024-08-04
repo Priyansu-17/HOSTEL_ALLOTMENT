@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color:rgb(210, 75, 79);
+    background-color:rgb(206, 179, 179);
   }
   
   .loginForm {
@@ -13,6 +13,7 @@
     border-radius: 10px;
     text-align: center;
     width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
   
   .logo {

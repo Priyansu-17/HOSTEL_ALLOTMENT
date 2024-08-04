@@ -16,11 +16,16 @@ const TableContainer = () => {
   ];
 
   const [files, setFiles] = useState({});
+  const [titles, setTitles] = useState({});
 
   const handleFileChange = (index, file) => {
     setFiles(prevFiles => ({
       ...prevFiles,
       [index]: file,
+    }));
+    setTitles(prevTitles => ({
+      ...prevTitles,
+      [index]: rows[index].title,
     }));
   };
 
@@ -30,6 +35,7 @@ const TableContainer = () => {
     const formData = new FormData();
     Object.keys(files).forEach(index => {
       formData.append(`file${index}`, files[index]);
+      formData.append(`title${index}`, titles[index]);
     });
 
     try {
@@ -40,8 +46,12 @@ const TableContainer = () => {
 
       if (response.ok) {
         console.log('Files uploaded successfully');
+        alert('Files uploaded successfully');
+        setFiles({});
+        setTitles({});
       } else {
         console.error('File upload failed');
+        alert('File upload failed')
       }
     } catch (error) {
       console.error('Error:', error);
