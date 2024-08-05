@@ -42,7 +42,7 @@ function App() {
           }
         />
         <Route
-          path="/admin-home"
+          path="/admin/:Hostel"
           element={
             isAuthenticated ? <LayoutWithHeader><AdminHome /></LayoutWithHeader> : <Navigate to="/login" />
           }

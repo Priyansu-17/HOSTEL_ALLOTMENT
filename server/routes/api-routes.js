@@ -26,9 +26,11 @@ module.exports = function (app) {
       const isAuthenticated = await controller.authenticateLogin(req, username, password);
       if (isAuthenticated) {
         if (username === process.env.admin_username && password === process.env.admin_password) {
+          req.session.role='admin';
           res.json({ success: true, role: 'admin', message: 'Login successful' });
         }
         else {
+          req.session.role='user'
           res.json({ success: true, role: 'student', message: 'Login successful' });
         }
       } else {
@@ -43,7 +45,7 @@ module.exports = function (app) {
   app.get('/api/check-session', (req, res) => {
     console.log("from check session",req.session.user);
     if (req.session.user) {
-      res.json({ isAuthenticated: true, user: req.session.user });
+      res.json({ isAuthenticated: true, user: req.session.user, role: req.session.role });
     } else {
       res.json({ isAuthenticated: false });
     }

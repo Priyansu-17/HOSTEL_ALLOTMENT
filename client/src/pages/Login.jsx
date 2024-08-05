@@ -24,11 +24,9 @@ const Login = ({ setIsAuthenticated }) => {
           // Update the seat status in the UI
           alert("Successfully logged in");
           setIsAuthenticated(true);
-          if(data.role==="admin")
-          navigate('/admin-home');
-          else{
+          
             navigate("/home-page");
-          }
+
           // Redirect to the desired page or perform other actions
         } else {
           alert('Failed to Log In , Invalid credentials');

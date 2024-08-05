@@ -1,23 +1,29 @@
 const db = require("../Database/mysql.js")
 const XLSX = require('xlsx');
 
-const authenticateLogin = async (req,username, password) => {
-  const query = `SELECT * FROM users WHERE admission_no = ? AND password = ?`;
-  return new Promise((resolve, reject) => {
-    db.query(query, [username, password], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        if (results.length > 0) {
-          resolve(true);
-          
-          req.session.user= results[0].admission_no;
+const authenticateLogin = async (req, username, password) => {
+  if (username === process.env.admin_username && password === process.env.admin_password) {
+    req.session.user='ADMIN'
+    return true;
+  }
+  else {
+    const query = `SELECT * FROM users WHERE admission_no = ? AND password = ?`;
+    return new Promise((resolve, reject) => {
+      db.query(query, [username, password], (err, results) => {
+        if (err) {
+          reject(err);
         } else {
-          resolve(false);
+          if (results.length > 0) {
+            resolve(true);
+
+            req.session.user = results[0].admission_no;
+          } else {
+            resolve(false);
+          }
         }
-      }
+      });
     });
-  });
+  }
 };
 const updateRoomInDatabase = (hostel, admissionNumber, newRoom) => {
   return new Promise((resolve, reject) => {
@@ -81,7 +87,7 @@ const swapUpdateRoomInDatabase = (hostel, admissionNumber, newRoom) => {
         if (err) {
           return db.rollback(() => reject(err));
         }
-        
+
         if (results.affectedRows === 0) {
           return db.rollback(() => reject(new Error('Admission number not found or room not found')));
         }
@@ -141,7 +147,7 @@ const fetchSeats = (block, floor) => {
   });
 };
 
-const updateSeatStatus = (id, status ,user) => {
+const updateSeatStatus = (id, status, user) => {
   const query = 'UPDATE JASPER SET status = ? , student_alloted = ? WHERE id = ?';
   return new Promise((resolve, reject) => {
     db.query(query, [status, user, id], (err) => {
@@ -193,7 +199,7 @@ const checkAllocation = async (user) => {
     });
 
     console.log(results);
-    return (results.length==0)?false:true;
+    return (results.length == 0) ? false : true;
   } catch (err) {
     console.error('Error swapping rooms:', err);
     return false;
