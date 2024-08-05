@@ -1,8 +1,11 @@
 
 .container {
   text-align: center;
-  
+
   width: 100%;
+}
+.container h1{
+  margin: 15px;
 }
 
 .seating {

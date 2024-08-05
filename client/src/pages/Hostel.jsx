@@ -10,6 +10,7 @@ const Hostel = () => {
     const [selectedFloor, setSelectedFloor] = useState('');
     const [selectedSeat, setSelectedSeat] = useState(null);
     const [user, setUser] = useState(null);
+    
 
     useEffect(() => {
         fetch('http://localhost:3001/api/blocks', { credentials: 'include' })
@@ -83,7 +84,8 @@ const Hostel = () => {
 
     return (
         <div className="container">
-            <h1>Hello {user} Select Your Room</h1>
+            <h1 className='userName'>Student: {user} </h1>
+            <h1>Select Your Room </h1>
             <div className="filters">
                 <label>
                     Block:
