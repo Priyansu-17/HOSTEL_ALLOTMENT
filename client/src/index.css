@@ -173,8 +173,8 @@ main {
 .hamburger-menu {
   display: none; /* Hidden by default */
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 60px;
+  left: 7px;
   font-size: 24px;
   cursor: pointer;
   z-index: 1001;
@@ -213,58 +213,68 @@ main {
 
 
 
-.admin-form{
-  background-color: #990000;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 60px -12px, rgba(0, 0, 0, 0.35) 0px 18px 36px -18px;
-  max-width: 500px;
-  padding: 20px;
-  overflow-x: auto;
+.admin-form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  margin-top: 5%;
   height: fit-content;
 }
-.admin-row-div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+
+/* Styling the heading */
+.admin-form h2 {
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-.submit-btn{
-  position: relative;
-  left: 15%;
   text-align: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #E5E5E5;
-  width: 70%;
-  font-weight:bolder;
-  font-size: 18px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.admin-row-title {
-  flex: 1;
-  font-weight: bold;
-  padding-right: 20px;
-  text-align: center;
+  color: #990000;
 }
 
+/* Styling the paragraph */
+.admin-form p {
+  margin-bottom: 30px;
+  color: #666666;
+}
+
+/* Styling the file input container */
 .admin-row-file-upload {
-  flex: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
+/* Styling the file input */
 .file-input {
-  width: 90%;
-  padding: 5px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
 }
+
+/* Styling the submit button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #990000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 88%;
+}
+
+.submit-btn:hover {
+  opacity: 100%;
+}
+
 
 
 /* EditableTable.css */
@@ -281,7 +291,6 @@ main {
   min-width: 250px;
   border-radius: 5px 5px 0 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  text-wrap: wrap;
 }
 
 .edit-container thead tr {
@@ -289,6 +298,8 @@ main {
   color: #ffffff;
   text-align: center;
   font-weight: bold;
+  text-wrap: wrap;
+
 }
 
 .edit-container th, td {
@@ -296,6 +307,8 @@ main {
   height: 40px; /* Set a fixed height for table cells */
   overflow: hidden; /* Ensure content does not overflow */
   text-overflow: ellipsis; /* Truncate overflow text with ellipsis */
+  text-align: center;
+  text-wrap: wrap;
 }
 
 .edit-container tbody tr {
@@ -606,15 +619,16 @@ main {
   }
 
   .edit-container {
-    padding: 5px; /* Reduce padding for smaller screens */
+    width: 80%;
   }
 
   .edit-container table {
-    font-size: 0.85em; /* Slightly reduce font size for very small screens */
+    font-size: 0.75em; /* Slightly reduce font size for very small screens */
+    width: 100%;
   }
 
   .edit-container th, td {
-    padding: 5px 8px; /* Further reduce padding */
+    padding: 5px 5px; /* Further reduce padding */
     font-size: 0.85em; /* Ensure text remains readable */
   }
 

@@ -1,57 +1,34 @@
 import React, { useState } from 'react';
-import AdminRow from '../subComponent/AdminRow.jsx';
+import { useParams } from 'react-router-dom';
 
 const TableContainer = () => {
-  const rows = [
-    { title: 'Amber' },
-    { title: 'Aquamarine' },
-    { title: 'Diamond' },
-    { title: 'Emerald' },
-    { title: 'Jasper' },
-    { title: 'Int' },
-    { title: 'Opal' },
-    { title: 'Rosaline' },
-    { title: 'Sapphire' },
-    { title: 'Topaz' },
-  ];
+  const { Hostel } = useParams();
+  const [file, setFile] = useState(null);
 
-  const [files, setFiles] = useState({});
-  const [titles, setTitles] = useState({});
-
-  const handleFileChange = (index, file) => {
-    setFiles(prevFiles => ({
-      ...prevFiles,
-      [index]: file,
-    }));
-    setTitles(prevTitles => ({
-      ...prevTitles,
-      [index]: rows[index].title,
-    }));
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
-    Object.keys(files).forEach(index => {
-      formData.append(`file${index}`, files[index]);
-      formData.append(`title${index}`, titles[index]);
-    });
+    formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3001/upload', {
+      const response = await fetch(`http://localhost:3001/upload/${Hostel}`, {
         method: 'POST',
         body: formData,
+        credentials:'include'
       });
 
       if (response.ok) {
-        console.log('Files uploaded successfully');
-        alert('Files uploaded successfully');
-        setFiles({});
-        setTitles({});
+        console.log('File uploaded successfully');
+        alert('File uploaded successfully');
+        setFile(null);
       } else {
         console.error('File upload failed');
-        alert('File upload failed')
+        alert('File upload failed');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -59,17 +36,21 @@ const TableContainer = () => {
   };
 
   return (
-    <form className="admin-form" onSubmit={handleSubmit}>
-      {rows.map((row, index) => (
-        <AdminRow
-          key={index}
-          index={index}
-          title={row.title}
-          onFileChange={handleFileChange}
-        />
-      ))}
-      <button type="submit" className="submit-btn">Submit</button>
-    </form>
+    <div className="admin-form">
+      <h2>Upload Hostel Student List</h2>
+      <p>Please select the Excel file containing the student list for the hostel: <strong>{Hostel}</strong></p>
+      <form onSubmit={handleSubmit}>
+          <div className="admin-row-file-upload">
+            <input 
+              type="file" 
+              accept=".xlsx, .xls" 
+              className="file-input"
+              onChange={handleFileChange}
+            />
+        </div>
+        <button type="submit" className="submit-btn">Submit</button>
+      </form>
+    </div>
   );
 };
 

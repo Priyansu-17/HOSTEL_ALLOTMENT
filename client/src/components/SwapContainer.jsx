@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-
+import { useParams } from 'react-router-dom';
 const SwapContainer = () => {
   const [admissionNumber1, setAdmissionNumber1] = useState('');
   const [admissionNumber2, setAdmissionNumber2] = useState('');
-
+  const { Hostel } = useParams(); 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:3001/api/swapRooms', {
+    const response = await fetch(`http://localhost:3001/api/swapRooms/${Hostel}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,6 +16,7 @@ const SwapContainer = () => {
         admissionNumber1,
         admissionNumber2,
       }),
+      credentials:'include'
     });
 
     if (response.ok) {

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
 import { FaUser, FaLock } from 'react-icons/fa';
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = ({ setIsAuthenticated ,setIsAuthenticatedStudent}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate=useNavigate();
@@ -23,8 +23,11 @@ const Login = ({ setIsAuthenticated }) => {
         if (data.success) {
           // Update the seat status in the UI
           alert("Successfully logged in");
+          if(data.role==="admin")
           setIsAuthenticated(true);
-          
+          else if(data.role==="user")
+          setIsAuthenticatedStudent(true);
+        
             navigate("/home-page");
 
           // Redirect to the desired page or perform other actions

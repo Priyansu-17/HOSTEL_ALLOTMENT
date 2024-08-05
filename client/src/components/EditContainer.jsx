@@ -1,60 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import EditRow from '../subComponent/EditRow.jsx'
+import EditRow from '../subComponent/EditRow.jsx';
+
 const FetchStudents = () => {
-  const { hostel } = useParams(); // Extract the hostel name from the URL
+  const { Hostel } = useParams(); // Extract the hostel name from the URL
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/api/students/${hostel}`);
-        const data = await response.json();
-        setStudents(data);
-      } catch (error) {
-        console.error('Error fetching students:', error);
-      }
-    };
+  const fetchStudents = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/students/${Hostel}`, {credentials:'include'});
+      const data = await response.json();
+      setStudents(data);
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    }
+  }, [Hostel]); // Dependency array includes Hostel
 
+  useEffect(() => {
     fetchStudents();
-  }, [hostel]);
+  }, [fetchStudents]); // Dependency array includes fetchStudents
 
   return (
-    <div>
-      <h2>{hostel} Students</h2>
-      <div>
-        {students.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Admission No</th>
-                <th>Room</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, index) => (
-                <EditRow
-                  key={index}
-                  admissionNumber={student.admission_no}
-                  currentRoom={student.room}
-                  onUpdateRoom={(admissionNumber, newRoom) => {
-                    setStudents((prevStudents) =>
-                      prevStudents.map((s) =>
-                        s.admission_no === admissionNumber
-                          ? { ...s, room: newRoom }
-                          : s
-                      )
-                    );
-                  }}
-                />
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No students found.</p>
-        )}
-      </div>
+    <div className='edit-container'>
+      <table>
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Admission No</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((student, index) => (
+            <EditRow
+              key={index}
+              currentRoom={student.room_number}
+              admissionNumber={(student.student_alloted=="NA")?"Vacant":student.student_alloted}
+              fetchStudents={fetchStudents} // Pass the function as a prop
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

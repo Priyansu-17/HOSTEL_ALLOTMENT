@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
+import { useParams } from 'react-router-dom';
 
 const AllotedContainer = () => {
   const [loading, setLoading] = useState(false);
-
+  const { Hostel } = useParams(); 
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/download', {
+      const response = await fetch(`http://localhost:3001/api/download/${Hostel}`, {
         method: 'GET',
         credentials: 'include',
       });

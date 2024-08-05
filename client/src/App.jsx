@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Header from './components/Navbar';
 import HomePage from "./pages/HomePage";
 import Login from './pages/Login';
-import Hostel from './pages/Hostel';
+import SeatSelection from './pages/SeatSelection';
 import AdminHome from './pages/AdminHome';
 import NotFound from './pages/NotFound';
+import Seat from './components/Seat';
 
 const LayoutWithHeader = ({ children }) => (
   <>
@@ -16,13 +17,20 @@ const LayoutWithHeader = ({ children }) => (
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticatedStudent, setIsAuthenticatedStudent] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:3001/api/check-session', { credentials: 'include' })
       .then(response => response.json())
       .then(data => {
-        setIsAuthenticated(data.isAuthenticated);
+        if(data.role==='admin'){
+          setIsAuthenticated(data.isAuthenticated);
+        }
+        else if(data.role==='user'){
+          setIsAuthenticatedStudent(data.isAuthenticated);
+        }
+        
         setIsLoading(false); // Set loading to false after checking the session
       });
   }, []);
@@ -30,15 +38,15 @@ function App() {
   if (isLoading) {
     return <p>Loading...</p>; // Or any loading indicator you prefer
   }
-
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated}
+      setIsAuthenticatedStudent={setIsAuthenticatedStudent} />} />
         <Route
-          path="/Hostel/:id"
+          path="/Hostel/:Hostel"
           element={
-            isAuthenticated ? <LayoutWithHeader><Hostel /></LayoutWithHeader> : <Navigate to="/login" />
+            isAuthenticated||isAuthenticatedStudent ? <LayoutWithHeader><SeatSelection /></LayoutWithHeader> : <Navigate to="/login" />
           }
         />
         <Route
@@ -50,10 +58,10 @@ function App() {
         <Route
           path="/home-page"
           element={
-            isAuthenticated ? <LayoutWithHeader><HomePage /></LayoutWithHeader> : <Navigate to="/login" />
+            isAuthenticated ||isAuthenticatedStudent ? <LayoutWithHeader><HomePage /></LayoutWithHeader> : <Navigate to="/login" />
           }
         />
-        <Route path="/" element={<Navigate to={isAuthenticated ? "/home-page" : "/login"} />} />
+        <Route path="/" element={<Navigate to={isAuthenticated ||isAuthenticatedStudent? "/home-page" : "/login"} />} />
         <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
       </Routes>
     </Router>
