@@ -48,6 +48,17 @@ module.exports = function (app) {
       res.json({ isAuthenticated: false });
     }
   });
+  app.get('/api/check-allocation', async(req,res)=>{
+    // console.log("check allocation");
+    const success = await controller.checkAllocation(req.session.user);
+
+    if (success) {
+      res.json({isAlloted:true });
+    } else {
+      res.json({isAlloted:false});
+    }
+    
+  })
   app.get('/api/logout', (req, res) => {
     if (req.session.user) {
       req.session.destroy(err => {

@@ -27,7 +27,7 @@ const Login = ({ setIsAuthenticated }) => {
           if(data.role==="admin")
           navigate('/admin-home');
           else{
-            navigate("/student-home");
+            navigate("/home-page");
           }
           // Redirect to the desired page or perform other actions
         } else {

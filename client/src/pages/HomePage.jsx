@@ -1,6 +1,6 @@
 import React from 'react';
 import CardContainer from '../components/CardContainer';
-const UserHome = () => {
+const HomePage = () => {
   return (
     <div className='User'>
       <CardContainer />
@@ -8,4 +8,4 @@ const UserHome = () => {
   );
 }
 
-export default UserHome;
+export default HomePage;

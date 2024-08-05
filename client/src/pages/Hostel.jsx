@@ -10,9 +10,24 @@ const Hostel = () => {
     const [selectedFloor, setSelectedFloor] = useState('');
     const [selectedSeat, setSelectedSeat] = useState(null);
     const [user, setUser] = useState(null);
-    
+    const [isAlloted,setIsAlloted] =useState(false);
 
     useEffect(() => {
+        fetch('http://localhost:3001/api/check-session', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.isAuthenticated) {
+                    setUser(data.user);
+                }
+            });
+        fetch('http://localhost:3001/api/check-allocation',{credentials:"include"})
+            .then(response=>response.json())
+            .then(data => {
+                console.log(data);
+                if(data.isAlloted){
+                    setIsAlloted(data.isAlloted);
+                }
+            })
         fetch('http://localhost:3001/api/blocks', { credentials: 'include' })
             .then(response => response.json())
             .then(data => setBlocks(data));
@@ -21,15 +36,9 @@ const Hostel = () => {
             .then(response => response.json())
             .then(data => setFloors(data));
 
-        fetch('http://localhost:3001/api/check-session', { credentials: 'include' })
-            .then(response => response.json())
-            .then(data => {
-                if (data.isAuthenticated) {
-                    setUser(data.user);
-                }
-            });
+        
     }, []);
-
+   
     useEffect(() => {
         if (selectedBlock && selectedFloor !== '') {
             fetch(`http://localhost:3001/api/seats?block=${selectedBlock}&floor=${selectedFloor}`, { credentials: 'include' })
@@ -38,7 +47,7 @@ const Hostel = () => {
                 
         }
     }, [selectedBlock, selectedFloor]);
-
+    
     const handleSeatClick = (index) => {
         const newSeats = seats.map((seat, i) => ({
             ...seat,
@@ -66,11 +75,14 @@ const Hostel = () => {
                     if (data.success) {
                         // Update the seat status in the UI
                         alert("Successfully confirmed your seat");
-                        const updatedSeats = seats.map(seat =>
-                            seat.id === selectedSeat.id ? { ...seat, status: 'alloted' , student_alloted:user} : seat
-                        );
-                        setSeats(updatedSeats);
-                        setSelectedSeat(null); // Clear the selected seat after finalizing
+                        
+                        fetch('http://localhost:3001/api/check-allocation', { credentials: 'include' })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.isAlloted) {
+                                    setIsAlloted(true);
+                                }
+                            });
                     } else {
                         alert('Failed to finalize seat selection.');
                     }
@@ -83,45 +95,53 @@ const Hostel = () => {
     if (blocks.length === 0 || floors.length === 0) return <p>Loading...</p>;
 
     return (
-        <div className="container">
-            <h1 className='userName'>Student: {user} </h1>
-            <h1>Select Your Room </h1>
-            <div className="filters">
-                <label>
-                    Block:
-                    <select value={selectedBlock} onChange={(e) => setSelectedBlock(e.target.value)}>
-                        <option value="">Select Block</option>
-                        {blocks.map((block) => (
-                            <option key={block} value={block}>{block}</option>
+        <>
+            {isAlloted ? (
+                <div className="alloted-message">
+                    <h1>You have already been allotted a room.</h1>
+                    <p>Your room allocation is finalized and you cannot make any more selections.</p>
+                </div>
+            ) : (
+                <div className="container">
+                    <h1 className='userName'>Student: {user} </h1>
+                    <h1>Select Your Room </h1>
+                    <div className="filters">
+                        <label>
+                            Block:
+                            <select value={selectedBlock} onChange={(e) => setSelectedBlock(e.target.value)}>
+                                <option value="">Select Block</option>
+                                {blocks.map((block) => (
+                                    <option key={block} value={block}>{block}</option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Floor:
+                            <select value={selectedFloor} onChange={(e) => setSelectedFloor(e.target.value)}>
+                                <option value="">Select Floor</option>
+                                {floors.map((floor) => (
+                                    <option key={floor} value={floor}>{floor}</option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+                    <div className="seating">
+                        {seats.map((seat, index) => (
+                            <Seat
+                                key={seat.id}
+                                roomNumber={seat.room_number}
+                                status={seat.status}
+                                user={seat.student_alloted}
+                                onClick={() => handleSeatClick(index)}
+                            />
                         ))}
-                    </select>
-                </label>
-                <label>
-                    Floor:
-                    <select value={selectedFloor} onChange={(e) => setSelectedFloor(e.target.value)}>
-                        <option value="">Select Floor</option>
-                        {floors.map((floor) => (
-                            <option key={floor} value={floor}>{floor}</option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-            <div className="seating">
-                {seats.map((seat, index) => (
-                    <Seat
-                        key={seat.id}
-                        roomNumber={seat.room_number}
-                        status={seat.status}
-                        user={seat.student_alloted}
-                        onClick={() => handleSeatClick(index)}
-                    />
-                ))}
-            </div>
-            
-            {selectedBlock && selectedFloor && (
-                <button onClick={handleFinalizeSelection}>Finalize Your Seat Selection</button>
+                    </div>
+                    {selectedBlock && selectedFloor && (
+                        <button onClick={handleFinalizeSelection}>Finalize Your Seat Selection</button>
+                    )}
+                </div>
             )}
-        </div>
+        </>
     );
 };
 

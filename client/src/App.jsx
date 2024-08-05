@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Navbar';
-import UserHome from './pages/UserHome';
+import HomePage from "./pages/HomePage";
 import Login from './pages/Login';
 import Hostel from './pages/Hostel';
 import AdminHome from './pages/AdminHome';
+import NotFound from './pages/NotFound';
 
 const LayoutWithHeader = ({ children }) => (
   <>
@@ -47,12 +48,13 @@ function App() {
           }
         />
         <Route
-          path="/student-home"
+          path="/home-page"
           element={
-            isAuthenticated ? <LayoutWithHeader><UserHome /></LayoutWithHeader> : <Navigate to="/login" />
+            isAuthenticated ? <LayoutWithHeader><HomePage /></LayoutWithHeader> : <Navigate to="/login" />
           }
         />
-        <Route path="/" element={<Navigate to={isAuthenticated ? "/student-home" : "/login"} />} />
+        <Route path="/" element={<Navigate to={isAuthenticated ? "/home-page" : "/login"} />} />
+        <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
       </Routes>
     </Router>
   );

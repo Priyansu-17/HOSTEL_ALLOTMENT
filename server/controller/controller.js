@@ -180,7 +180,25 @@ const fetchFloors = () => {
   });
 };
 
+const checkAllocation = async (user) => {
+  try {
+    const getRoomQuery = `SELECT student_alloted, room_number FROM JASPER WHERE student_alloted IN ('${user}')`;
+    const results = await new Promise((resolve, reject) => {
+      db.query(getRoomQuery, (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(results);
+      });
+    });
 
+    console.log(results);
+    return (results.length==0)?false:true;
+  } catch (err) {
+    console.error('Error swapping rooms:', err);
+    return false;
+  }
+};
 
 const updateHostelStudents = async (req, res) => {
   try {
@@ -264,5 +282,6 @@ module.exports = {
   fetchBlocks,
   fetchFloors,
   updateHostelStudents,
-  downloadAllotedList
+  downloadAllotedList,
+  checkAllocation
 };
