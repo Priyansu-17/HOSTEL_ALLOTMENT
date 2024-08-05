@@ -19,30 +19,93 @@ const authenticateLogin = async (req,username, password) => {
     });
   });
 };
-const updateRoomInDatabase = (hostel,admissionNumber, newRoom) => {
-  const query = `UPDATE ${hostel} SET room_number = ? WHERE student_alloted = ?`;
+const updateRoomInDatabase = (hostel, admissionNumber, newRoom) => {
   return new Promise((resolve, reject) => {
-    db.query(query, [newRoom, admissionNumber], (err, results) => {
+    // Start a transaction
+    db.beginTransaction((err) => {
       if (err) {
-        reject(err);
-      } else {
-        resolve(results);
+        return reject(err);
       }
+
+      // Step 1: Fetch the current room for the given admission number
+      const fetchCurrentRoomQuery = `SELECT room_number FROM ${hostel} WHERE student_alloted = ?`;
+      db.query(fetchCurrentRoomQuery, [admissionNumber], (err, results) => {
+        if (err) {
+          return db.rollback(() => reject(err));
+        }
+
+        if (results.length === 0) {
+          return db.rollback(() => reject(new Error('Admission number not found')));
+        }
+
+        const currentRoom = results[0].room_number;
+
+        // Step 2: Set student_alloted to NULL in the old room
+        const clearOldRoomQuery = `UPDATE ${hostel} SET student_alloted = NULL WHERE room_number = ?`;
+        db.query(clearOldRoomQuery, [currentRoom], (err) => {
+          if (err) {
+            return db.rollback(() => reject(err));
+          }
+
+          // Step 3: Assign the new admission number to the new room
+          const assignNewRoomQuery = `UPDATE ${hostel} SET student_alloted = ? WHERE room_number = ?`;
+          db.query(assignNewRoomQuery, [admissionNumber, newRoom], (err) => {
+            if (err) {
+              return db.rollback(() => reject(err));
+            }
+
+            // Commit the transaction
+            db.commit((err) => {
+              if (err) {
+                return db.rollback(() => reject(err));
+              }
+              resolve('Update successful');
+            });
+          });
+        });
+      });
     });
   });
 };
 
-const swapRoomsInDatabase = async (hostel,admissionNumber1, admissionNumber2) => {
+const swapUpdateRoomInDatabase = (hostel, admissionNumber, newRoom) => {
+  return new Promise((resolve, reject) => {
+    db.beginTransaction((err) => {
+      if (err) {
+        return reject(err);
+      }
+
+      // Assign the admission number to the new room
+      const assignNewRoomQuery = `UPDATE ${hostel} SET student_alloted = ? WHERE room_number = ?`;
+      db.query(assignNewRoomQuery, [admissionNumber, newRoom], (err, results) => {
+        if (err) {
+          return db.rollback(() => reject(err));
+        }
+        
+        if (results.affectedRows === 0) {
+          return db.rollback(() => reject(new Error('Admission number not found or room not found')));
+        }
+
+        db.commit((err) => {
+          if (err) {
+            return db.rollback(() => reject(err));
+          }
+          resolve('Update successful');
+        });
+      });
+    });
+  });
+};
+
+const swapRoomsInDatabase = async (hostel, admissionNumber1, admissionNumber2) => {
   try {
-    // Retrieve current rooms for both students
     const getRoomQuery = `SELECT student_alloted, room_number FROM ${hostel} WHERE student_alloted IN (?, ?)`;
-    const [results] = await new Promise((resolve, reject) => {
+    const results = await new Promise((resolve, reject) => {
       db.query(getRoomQuery, [admissionNumber1, admissionNumber2], (err, results) => {
         if (err) {
-          reject(err);
-        } else {
-          resolve(results);
+          return reject(err);
         }
+        resolve(results);
       });
     });
 
@@ -53,9 +116,8 @@ const swapRoomsInDatabase = async (hostel,admissionNumber1, admissionNumber2) =>
     const room1 = results.find(row => row.student_alloted === admissionNumber1).room_number;
     const room2 = results.find(row => row.student_alloted === admissionNumber2).room_number;
 
-    // Swap rooms
-    await updateRoomInDatabase(admissionNumber1, room2);
-    await updateRoomInDatabase(admissionNumber2, room1);
+    await swapUpdateRoomInDatabase(hostel, admissionNumber1, room2);
+    await swapUpdateRoomInDatabase(hostel, admissionNumber2, room1);
 
     return true;
   } catch (err) {
@@ -63,6 +125,8 @@ const swapRoomsInDatabase = async (hostel,admissionNumber1, admissionNumber2) =>
     return false;
   }
 };
+
+
 
 const fetchSeats = (block, floor) => {
   const query = 'SELECT * FROM JASPER WHERE block = ? AND floor = ?';

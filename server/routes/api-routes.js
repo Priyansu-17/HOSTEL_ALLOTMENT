@@ -76,12 +76,28 @@ module.exports = function (app) {
     }
   });
 
+  // Route to fetch students from the jasper table
+app.get('/api/students/:hostel', (req, res) => {
+  const { hostel } = req.params;
+
+  // Query to fetch data from the jasper table based on the hostel
+  const query = 'SELECT students FROM users WHERE hostel = ?';
+  db.query(query, [hostel], (err, results) => {
+    if (err) {
+      console.error('Error fetching students:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
   app.post(API_TO_SWAP_ROOMS, async (req, res) => {
     const { admissionNumber1, admissionNumber2 } = req.body;
     if (!admissionNumber1 || !admissionNumber2) {
       return res.status(400).json({ error: 'Both admission numbers are required' });
     }
-    const success = await controller.swapRoomsInDatabase(admissionNumber1, admissionNumber2);
+    const success = await controller.swapRoomsInDatabase('JASPER',admissionNumber1, admissionNumber2);
 
     if (success) {
       res.status(200).send('Rooms swapped successfully');
@@ -133,6 +149,7 @@ module.exports = function (app) {
 
   const upload = multer({ dest: 'uploads/' });
   app.post('/upload', upload.any(), async (req, res) => {
+    console.log(req.body.formData)
     await controller.updateHostelStudents(req,res);
   });
 
