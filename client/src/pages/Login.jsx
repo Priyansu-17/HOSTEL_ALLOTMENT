@@ -44,6 +44,11 @@ const Login = ({ setIsAuthenticated ,setIsAuthenticatedStudent}) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.info}>
+        <h3>FOR STUDENT LOGIN TRY USERNAME BETWEEN 21JE0002 TO 21JE1000 AND PASSWORD AS 12345678</h3>
+        <br/>
+        <h3>FOR ADMIN LOGIN TRY USERNAME AS ADMIN@ISM AND PASSWORD AS ISM@1234</h3>
+      </div>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
         <div className={styles.logo}></div>
         <h2>Log In!</h2>

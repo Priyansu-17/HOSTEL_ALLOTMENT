@@ -1,9 +1,11 @@
 /* src/Login.module.css */
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
     background-color:rgb(206, 179, 179);
   }
   
@@ -16,6 +18,19 @@
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
   
+  .info {
+    position: absolute;
+    width: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 2; /* Higher than loginForm */
+    display: none;
+  }
   .logo {
     background-image: url('../../public/download.png'); /* Replace with the actual path to the logo */
     background-size: contain;
@@ -94,4 +109,15 @@
   width:100%;
   
 
+ }
+
+ @media (max-width: 768px) {
+  .info{
+    font-size: 12px;
+  }
+ }
+ @media (max-width: 480px) {
+  .info{
+    font-size: 10px;
+  }
  }
