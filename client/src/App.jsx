@@ -27,7 +27,7 @@ function App() {
         if(data.role==='admin'){
           setIsAuthenticated(data.isAuthenticated);
         }
-        else if(data.role==='user'){
+        else if(data.role==='student'){
           setIsAuthenticatedStudent(data.isAuthenticated);
         }
         
