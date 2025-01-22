@@ -11,6 +11,10 @@ const AdminHome = () => {
 
   return (
     <>
+      {/* Hamburger menu for small screens */}
+      <div className='hamburger-menu' onClick={toggleSidebar}>
+        ☰
+      </div>
       {/* Sidebar with conditional class for toggling */}
       <div className={`admin-sidebar ${isSidebarOpen ? 'sidebar-active' : ''}`}>
         <button className={activeComponent === 'table' ? 'active' : ''} onClick={() => setActiveComponent('table')}>Table</button>
@@ -19,10 +23,6 @@ const AdminHome = () => {
         <button className={activeComponent === 'download' ? 'active' : ''} onClick={() => setActiveComponent('download')}>Alloted List</button>
       </div>
       <div className='admin'>
-         {/* Hamburger menu for small screens */}
-      <div className='hamburger-menu' onClick={toggleSidebar}>
-        ☰
-      </div>
         {activeComponent === 'table' && <TableContainer />}
         {activeComponent === 'edit' && <EditContainer />}
         {activeComponent === 'swap' && <SwapContainer />}

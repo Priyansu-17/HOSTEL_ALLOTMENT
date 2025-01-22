@@ -1,33 +1,27 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-const EditRow = ({ admissionNumber, currentRoom, fetchStudents }) => {
+
+const EditRow = ({ admissionNumber, currentRoom, onUpdateRoom }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [newAdmissionNumber, setNewAdmissionNumber] = useState(admissionNumber);
-  const { Hostel } = useParams(); 
+  const [newRoom, setNewRoom] = useState(currentRoom);
+
   const handleEditClick = async () => {
     if (isEditing) {
-      try {
-        const response = await fetch(`http://localhost:3001/api/updateRoom/${Hostel}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            newAdmissionNumber,
-            roomNumber: currentRoom,
-          }),
-          credentials:'include'
-        });
+      const response = await fetch('http://localhost:3001/api/updateRoom', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          admissionNumber,
+          newRoom,
+        }),
+      });
 
-        if (response.ok) {
-          alert("Update successful. Refreshing data...");
-          await fetchStudents(); // Refresh student data after a successful update
-        } else {
-          throw new Error('Failed to update admission number');
-        }
-      } catch (error) {
-        alert("Failed to update admission number");
-        console.error(error);
+      if (response.ok) {
+        onUpdateRoom(admissionNumber, newRoom);
+      } else {
+        alert("Failed to update room");
+        console.error('Failed to update room');
       }
     }
     setIsEditing(!isEditing);
@@ -35,16 +29,16 @@ const EditRow = ({ admissionNumber, currentRoom, fetchStudents }) => {
 
   return (
     <tr>
-      <td>{currentRoom}</td>
+      <td>{admissionNumber}</td>
       <td>
         {isEditing ? (
           <input
             type="text"
-            value={newAdmissionNumber}
-            onChange={(e) => setNewAdmissionNumber(e.target.value)}
+            value={newRoom}
+            onChange={(e) => setNewRoom(e.target.value)}
           />
         ) : (
-          admissionNumber
+          currentRoom
         )}
       </td>
       <td>
