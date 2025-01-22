@@ -2,7 +2,7 @@ const db = require("../Database/mysql.js")
 const XLSX = require('xlsx');
 
 const authenticateLogin = async (req,username, password) => {
-  const query = `SELECT * FROM users WHERE admission_no = ? AND password = ?`;
+  const query = `SELECT * FROM STUDENTS WHERE admission_no = ? AND password = ?`;
   return new Promise((resolve, reject) => {
     db.query(query, [username, password], (err, results) => {
       if (err) {
